@@ -6,16 +6,22 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import s1131244o365st.pu.edu.firestore.ui.theme.FireStoreTheme
+
 
 class MainActivity : ComponentActivity() {
 
@@ -54,6 +60,7 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
+                UserScoreScreen()
             }
         }
     }
@@ -74,3 +81,31 @@ fun GreetingPreview() {
         Greeting("Android")
     }
 }
+
+@Composable
+fun UserScoreScreen( userScoreViewModel: UserScoreViewModel = viewModel()
+) {
+    Column (
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Button(onClick = {
+            // 在按鈕點擊時，直接呼叫 ViewModel 的函式
+            var userScore = UserScoreModel("子青", 39)
+            userScoreViewModel.addUser(userScore)
+        }) {
+            Text("新增資料")
+        }
+        Button(onClick = {
+            // 在按鈕點擊時，直接呼叫 ViewModel 的函式
+            var userScore = UserScoreModel("施聿觀", 666)
+            userScoreViewModel.updateUser(userScore)
+        }) {
+            Text("新增/異動資料")
+        }
+
+        Text(userScoreViewModel.message)
+    }
+}
+
