@@ -13,6 +13,13 @@ class UserScoreViewModel : ViewModel() {
     var message by mutableStateOf("訊息")
         private set
 
+    var user by mutableStateOf("")
+        private set
+
+    fun onUserChange(newUser: String) {
+        user = newUser
+    }
+
     fun addUser(userScore: UserScoreModel) {
         // 在 viewModelScope 中啟動一個協程
         viewModelScope.launch {
